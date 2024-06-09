@@ -2,3 +2,10 @@
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
+
+tasks:
+  - name: aws-cli
+    env:
+      AWS_CLI_AUTO_PROMPT: on-partial
+    before: |
+      ./bin/aws_cli_install.sh
