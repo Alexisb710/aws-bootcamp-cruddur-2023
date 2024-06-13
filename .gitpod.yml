@@ -9,6 +9,10 @@ tasks:
       AWS_CLI_AUTO_PROMPT: on-partial
     before: |
       ./bin/aws_cli_install.sh
+  - name: react-js
+    command: |
+      cd frontend-react-js
+      npm i
   - name: postgres
     before: |
       curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
