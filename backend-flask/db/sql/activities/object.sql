@@ -7,4 +7,5 @@ SELECT
   activities.expires_at
 FROM public.activities
 INNER JOIN public.users ON users.uuid = activities.user_uuid 
-WHERE activities.uuid = %(uuid)s
+WHERE 
+    activities.uuid = %(uuid)s
