@@ -2,8 +2,8 @@ version: "3.9"
 services:
   backend-flask:
     environment:
-      CONNECTION_URL: "${PROD_CONNECTION_URL}"
-      # CONNECTION_URL: "${CONNECTION_URL}"
+      # CONNECTION_URL: "${PROD_CONNECTION_URL}"
+      CONNECTION_URL: "${CONNECTION_URL}"
       FRONTEND_URL: "http://localhost:3000"
       BACKEND_URL: "http://localhost:4567"
       OTEL_SERVICE_NAME: "backend-flask"
@@ -23,6 +23,7 @@ services:
       - "4567:4567"
     volumes:
       - ./backend-flask:/backend-flask
+
   frontend-react-js:
     environment:
       REACT_APP_BACKEND_URL: "http://localhost:4567"
@@ -56,11 +57,11 @@ services:
     container_name: dynamodb-local
     ports:
       - "8000:8000"
-    # networks:
-    #   - cruddur-net
     volumes:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
+    networks:
+      - internal-network
 
   db:
     image: postgres:16-alpine
@@ -70,10 +71,10 @@ services:
       - POSTGRES_PASSWORD=password
     ports:
       - "5432:5432"
-    # networks:
-    #   - cruddur-net
     volumes:
       - db:/var/lib/postgresql/data
+    networks:
+      - internal-network
 
 # the name flag is a hack to change the default prepend folder
 # name when outputting the image names
