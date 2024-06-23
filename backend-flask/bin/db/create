@@ -5,5 +5,12 @@ NO_COLOR='\033[0m'
 LABEL="db-create"
 printf "${GREEN}== ${LABEL}${NO_COLOR}\n"
 
+if [ -z "$CONNECTION_URL" ]; then
+  echo "Error: CONNECTION_URL is not set."
+  exit 1
+fi
+
 NO_DB_CONNECTION_URL=$(sed 's/\/cruddur//g' <<<"$CONNECTION_URL")
+echo "Connecting to database with URL: $NO_DB_CONNECTION_URL"
+
 psql $NO_DB_CONNECTION_URL -c "CREATE database cruddur;"

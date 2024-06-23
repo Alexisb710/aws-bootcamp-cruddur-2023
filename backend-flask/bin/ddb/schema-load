@@ -2,6 +2,7 @@
 
 import boto3
 import sys
+from botocore.exceptions import ClientError
 
 attrs = {
   'endpoint_url': 'http://localhost:8000'
@@ -11,39 +12,50 @@ if len(sys.argv) == 2:
   if "prod" in sys.argv[1]:
     attrs = {}
 
-ddb = boto3.client('dynamodb',**attrs)
+ddb = boto3.client('dynamodb', **attrs)
 
 table_name = 'cruddur-messages'
 
-response = ddb.create_table(
-  TableName=table_name,
-  AttributeDefinitions=[
-    {
-      'AttributeName': 'pk',
-      'AttributeType': 'S'
-    },
-    {
-      'AttributeName': 'sk',
-      'AttributeType': 'S'
-    },
-  ],
-  KeySchema=[
-    {
-      'AttributeName': 'pk',
-      'KeyType': 'HASH'
-    },
-    {
-      'AttributeName': 'sk',
-      'KeyType': 'RANGE'
-    },
-  ],
-  #GlobalSecondaryIndexes=[
-  #],
-  BillingMode='PROVISIONED',
-  ProvisionedThroughput={
-      'ReadCapacityUnits': 5,
-      'WriteCapacityUnits': 5
-  }
-)
-
-print(response)
+# Check if the table exists
+try:
+  existing_tables = ddb.list_tables()['TableNames']
+  if table_name in existing_tables:
+    print(f"Table {table_name} already exists. Skipping creation.")
+  else:
+    response = ddb.create_table(
+      TableName=table_name,
+      AttributeDefinitions=[
+        {
+          'AttributeName': 'pk',
+          'AttributeType': 'S'
+        },
+        {
+          'AttributeName': 'sk',
+          'AttributeType': 'S'
+        },
+      ],
+      KeySchema=[
+        {
+          'AttributeName': 'pk',
+          'KeyType': 'HASH'
+        },
+        {
+          'AttributeName': 'sk',
+          'KeyType': 'RANGE'
+        },
+      ],
+      # GlobalSecondaryIndexes=[
+      # ],
+      BillingMode='PROVISIONED',
+      ProvisionedThroughput={
+        'ReadCapacityUnits': 5,
+        'WriteCapacityUnits': 5
+      }
+    )
+    print(f"Table {table_name} created successfully.")
+    print(response)
+except ClientError as e:
+  if e.response['Error']['Code'] == 'ResourceInUseException':
+    print(f"Table {table_name} already exists.")
+  else:
+    print(f"Unexpected error: {e}")

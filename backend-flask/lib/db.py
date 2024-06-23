@@ -8,6 +8,12 @@ class Db:
   def __init__(self):
     self.init_pool()
 
+  def init_pool(self):
+    connection_url = os.getenv("CONNECTION_URL")
+    if not connection_url:
+      raise ValueError("CONNECTION_URL environment variable not set")
+    self.pool = ConnectionPool(connection_url)
+
   def template(self,*args):
     pathing = list((app.root_path,'db','sql',) + args)
     pathing[-1] = pathing[-1] + ".sql"
@@ -23,9 +29,7 @@ class Db:
       template_content = f.read()
     return template_content
 
-  def init_pool(self):
-    connection_url = os.getenv("CONNECTION_URL")
-    self.pool = ConnectionPool(connection_url)
+  
   # we want to commit data such as an insert
   # be sure to check for RETURNING in all uppercases
   def print_params(self,params):
@@ -97,12 +101,14 @@ class Db:
     ) object_row);
     """
     return sql
+    
   def query_wrap_array(self,template):
     sql = f"""
     (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))),'[]'::json) FROM (
     {template}
     ) array_row);
     """
+    print(f"Wrapped SQL: {sql}")
     return sql
   def print_sql_err(self,err):
     # get details about the exception
