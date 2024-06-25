@@ -11,6 +11,9 @@
       "name": "frontend-react-js",
       "image": "639885198750.dkr.ecr.us-east-1.amazonaws.com/frontend-react-js",
       "essential": true,
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http:/localhost:3000 || exit 1"]
+      },
       "portMappings": [
         {
           "name": "frontend-react-js",
