@@ -51,8 +51,8 @@
           "name": "AWS_COGNITO_USER_POOL_CLIENT_ID",
           "value": "5g9eii56lguo6mbso3qn2e8hf1"
         },
-        { "name": "FRONTEND_URL", "value": "*" },
-        { "name": "BACKEND_URL", "value": "*" },
+        { "name": "FRONTEND_URL", "value": "https://cruddur-app.cc" },
+        { "name": "BACKEND_URL", "value": "https://api.cruddur-app.cc" },
         { "name": "AWS_DEFAULT_REGION", "value": "us-east-1" }
       ],
       "secrets": [
