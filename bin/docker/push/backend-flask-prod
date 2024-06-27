@@ -5,3 +5,8 @@ echo $ECR_BACKEND_FLASK_URL
 
 docker tag backend-flask-prod:latest 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest
 docker push 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest
+
+
+docker pull 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest  
+docker tag 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest backend-flask:latest
+docker buildx build --platform linux/amd64 -t 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest --push .

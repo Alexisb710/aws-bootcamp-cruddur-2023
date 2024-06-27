@@ -1,5 +1,14 @@
 #! /usr/bin/env bash
 
+ABS_PATH=$(readlink -f "$0")
+BUILD_PATH=$(dirname $ABS_PATH)
+DOCKER_PATH=$(dirname $BUILD_PATH)
+BIN_PATH=$(dirname $DOCKER_PATH)
+PROJECT_PATH=$(dirname $BIN_PATH)
+echo $PROJECT_PATH
+
+FRONTEND_REACT_JS_PATH="$PROJECT_PATH/backend-flask"
+
 docker buildx build --platform linux/amd64,linux/arm64 \
 --build-arg REACT_APP_BACKEND_URL="https://api.cruddur-app.cc" \
 --build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
@@ -7,5 +16,5 @@ docker buildx build --platform linux/amd64,linux/arm64 \
 --build-arg REACT_APP_AWS_USER_POOLS_ID="us-east-1_DGUIXYXqJ" \
 --build-arg REACT_APP_CLIENT_ID="5g9eii56lguo6mbso3qn2e8hf1" \
 -t 639885198750.dkr.ecr.us-east-1.amazonaws.com/frontend-react-js:latest \
--f Dockerfile.prod \
---push .
+-f "$FRONTEND_REACT_JS_PATH/Dockerfile.prod" \
+--push "$FRONTEND_REACT_JS_PATH/."
