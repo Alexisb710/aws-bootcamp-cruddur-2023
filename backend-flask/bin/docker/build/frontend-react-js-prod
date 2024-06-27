@@ -1,0 +1,9 @@
+docker buildx build --platform linux/amd64,linux/arm64 \
+--build-arg REACT_APP_BACKEND_URL="https://api.cruddur-app.cc" \
+--build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
+--build-arg REACT_APP_AWS_COGNITO_REGION="$AWS_DEFAULT_REGION" \
+--build-arg REACT_APP_AWS_USER_POOLS_ID="us-east-1_DGUIXYXqJ" \
+--build-arg REACT_APP_CLIENT_ID="5g9eii56lguo6mbso3qn2e8hf1" \
+-t 639885198750.dkr.ecr.us-east-1.amazonaws.com/frontend-react-js:latest \
+-f Dockerfile.prod \
+--push .
