@@ -1,4 +1,5 @@
 {
   "terminal.integrated.fontSize": 14,
-  "workbench.colorCustomizations": {}
+  "workbench.colorCustomizations": {},
+  "python.analysis.extraPaths": ["./backend-flask"]
 }
