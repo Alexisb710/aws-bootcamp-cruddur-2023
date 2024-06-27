@@ -1,5 +1,11 @@
 #! /usr/bin/env bash
 
+ABS_PATH=$(readlink -f "$0")
+BACKEND_PATH=$(dirname $ABS_PATH)
+BIN_PATH=$(dirname $BACKEND_PATH)
+PROJECT_PATH=$(dirname $BIN_PATH)
+BACKEND_FLASK_PATH="$PROJECT_PATH/backend-flask"
+
 ECR_BACKEND_FLASK_URL="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/backend-flask"
 echo $ECR_BACKEND_FLASK_URL
 
@@ -9,4 +15,4 @@ docker push 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest
 
 docker pull 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest  
 docker tag 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest backend-flask:latest
-docker buildx build --platform linux/amd64 -t 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest --push .
+docker buildx build --platform linux/amd64 -t 639885198750.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest --push "$BACKEND_FLASK_PATH/."
