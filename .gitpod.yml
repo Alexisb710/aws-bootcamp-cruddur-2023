@@ -8,7 +8,12 @@ tasks:
     env:
       AWS_CLI_AUTO_PROMPT: on-partial
     before: |
-      ./bin/aws_cli_install.sh
+      cd /workspace
+      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      unzip awscliv2.zip
+      sudo ./aws/install
+      cd $THEIA_WORKSPACE_ROOT
+      bash bin/ecr/login
   - name: react-js
     command: |
       cd frontend-react-js
@@ -22,6 +27,11 @@ tasks:
     command: |
       export GITPOD_IP=$(curl ifconfig.me)
       source "$THEIA_WORKSPACE_ROOT/bin/rds/update-sg-rule"
+  - name: react-js
+    command: |
+      ruby $THEIA_WORKSPACE_ROOT/bin/frontend/generate-env
+      cd frontend-react-js
+      npm i
   - name: flask
     command: |
       cd backend-flask
@@ -31,3 +41,15 @@ tasks:
       curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
       sudo dpkg -i session-manager-plugin.deb
       cd backend-flask
+
+ports:
+  - name: frontend
+    port: 3000
+    onOpen: open-browser
+    visibility: public
+  - name: backend
+    port: 4567
+    visibility: public
+  - name: xray-daemon
+    port: 2000
+    visibility: public

@@ -1,3 +1,10 @@
-# Ignore the .env file
-.env
+# Environment variables
+*.env
 frontend-react-js/build/*
+erb/*
+
+#Node modules
+node_modules
+
+#Docker
+docker-compose.yml

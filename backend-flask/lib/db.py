@@ -10,6 +10,7 @@ class Db:
 
   def init_pool(self):
     connection_url = os.getenv("CONNECTION_URL")
+
     if not connection_url:
       raise ValueError("CONNECTION_URL environment variable not set")
     self.pool = ConnectionPool(connection_url)
