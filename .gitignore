@@ -8,3 +8,6 @@ node_modules
 
 #Docker
 docker-compose.yml
+
+# Task definition environment variables for backend
+aws/task-definition/backend-flask.json
