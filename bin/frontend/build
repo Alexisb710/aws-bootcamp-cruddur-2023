@@ -6,7 +6,7 @@ BIN_PATH=$(dirname $FRONTEND_PATH)
 PROJECT_PATH=$(dirname $BIN_PATH)
 echo $PROJECT_PATH
 
-FRONTEND_REACT_JS_PATH="$PROJECT_PATH/backend-flask"
+FRONTEND_REACT_JS_PATH="$PROJECT_PATH/frontend-react-js"
 
 docker buildx build --platform linux/amd64,linux/arm64 \
 --build-arg REACT_APP_BACKEND_URL="https://api.cruddur-app.cc" \
