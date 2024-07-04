@@ -1,8 +1,0 @@
-#! /usr/bin/env bash
-
-ABS_PATH=$(readlink -f "$0")
-SERVERLESS_PATH=$(dirname $ABS_PATH)
-DATA_FILE_PATH="$SERVERLESS_PATH/files/kylo.jpg"
-
-aws s3 rm "s3://assets.$DOMAIN_NAME/avatars/original/kylo.jpg"
-aws s3 rm "s3://assets.$DOMAIN_NAME/avatars/processed/kylo.jpg"

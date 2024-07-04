@@ -88,9 +88,10 @@ export class ThumbingServerlessCdkStack extends cdk.Stack {
     folderOutput: string
   ): lambda.IFunction {
     const lambdaFunction = new lambda.Function(this, "ThumbLambda", {
-      runtime: lambda.Runtime.NODEJS_18_X,
+      runtime: lambda.Runtime.NODEJS_LATEST,
       handler: "index.handler",
       code: lambda.Code.fromAsset(functionPath),
+      timeout: cdk.Duration.seconds(5), // Increase timeout here
       environment: {
         DEST_BUCKET_NAME: assetsBucketName,
         FOLDER_INPUT: folderInput,
