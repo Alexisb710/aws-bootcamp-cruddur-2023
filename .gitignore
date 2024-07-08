@@ -11,3 +11,9 @@ docker-compose.yml
 
 # Task definition environment variables for backend
 aws/task-definition/backend-flask.json
+
+# packages
+package-lock.json
+package.json
+
+.DS_Store
