@@ -4,6 +4,7 @@ import boto3
 import os
 import sys
 
+
 print("== db-update-cognito-user-ids")
 
 current_path = os.path.dirname(os.path.abspath(__file__))

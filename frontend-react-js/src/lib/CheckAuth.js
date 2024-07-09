@@ -1,4 +1,5 @@
 import { Auth } from "aws-amplify";
+import { resolvePath } from "react-router-dom";
 
 export async function getAccessToken() {
   Auth.currentSession()
@@ -7,7 +8,6 @@ export async function getAccessToken() {
       localStorage.setItem("access_token", access_token);
     })
     .catch((err) => console.log(err));
-  return localStorage.getItem("access_token");
 }
 
 export async function checkAuth(setUser) {
@@ -18,12 +18,18 @@ export async function checkAuth(setUser) {
     bypassCache: false,
   })
     .then((cognito_user) => {
-      console.log("user", cognito_user);
       setUser({
+        cognito_user_uuid: cognito_user.attributes.sub,
         display_name: cognito_user.attributes.name,
         handle: cognito_user.attributes.preferred_username,
       });
       return Auth.currentSession();
+    })
+    .then((cognito_user_session) => {
+      localStorage.setItem(
+        "access_token",
+        cognito_user_session.accessToken.jwtToken
+      );
     })
     .catch((err) => console.log(err));
 }
