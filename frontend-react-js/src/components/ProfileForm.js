@@ -2,15 +2,13 @@ import "./ProfileForm.css";
 import React from "react";
 import process from "process";
 import { getAccessToken } from "lib/CheckAuth";
-import { upload } from "@testing-library/user-event/dist/upload";
 
 export default function ProfileForm(props) {
-  const [bio, setBio] = React.useState(0);
-  const [displayName, setDisplayName] = React.useState(0);
+  const [bio, setBio] = React.useState("");
+  const [displayName, setDisplayName] = React.useState("");
 
   React.useEffect(() => {
-    console.log("useEffects", props);
-    setBio(props.profile.bio);
+    setBio(props.profile.bio || "");
     setDisplayName(props.profile.display_name);
   }, [props.profile]);
 
@@ -43,7 +41,6 @@ export default function ProfileForm(props) {
       console.log(err);
     }
   };
-
   const s3upload = async (event) => {
     console.log("event", event);
     const file = event.target.files[0];
@@ -129,9 +126,8 @@ export default function ProfileForm(props) {
             </div>
           </div>
           <div className="popup_content">
-            <div className="upload" onClick={s3upload}>
-              Upload Avatar
-            </div>
+            <input type="file" name="avatarupload" onChange={s3upload} />
+
             <div className="field display_name">
               <label>Display Name</label>
               <input

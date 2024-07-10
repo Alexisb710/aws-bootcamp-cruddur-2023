@@ -264,13 +264,25 @@ def data_users_short(handle):
   data = UsersShort.run(handle)
   return data, 200
 
+# @app.route("/api/activities/@<string:handle>", methods=['GET'])
+# def data_handle(handle):
+#   model = UserActivities.run(handle)
+#   if model['errors'] is not None:
+#     return model['errors'], 422
+#   else:
+#     return model['data'], 200
+  
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
 def data_handle(handle):
-  model = UserActivities.run(handle)
-  if model['errors'] is not None:
-    return model['errors'], 422
-  else:
-    return model['data'], 200
+    app.logger.debug("Fetching activities for handle: %s", handle)
+    model = UserActivities.run(handle)
+    app.logger.debug("Model returned: %s", model)
+    if model['errors'] is not None:
+        app.logger.error("Errors occurred: %s", model['errors'])
+        return model['errors'], 422
+    else:
+        return model['data'], 200
+
 
 @app.route("/api/activities/search", methods=['GET'])
 def data_search():
