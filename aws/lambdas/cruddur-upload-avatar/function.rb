@@ -1,7 +1,7 @@
 require 'aws-sdk-s3'
 require 'json'
 require 'jwt'
-
+ 
 def handler(event:, context:)
   puts event
   # return cors headers for preflight check
@@ -10,7 +10,7 @@ def handler(event:, context:)
     { 
       headers: {
         "Access-Control-Allow-Headers": "*, Authorization",
-        "Access-Control-Allow-Origin": "https://localhost:3000",
+        "Access-Control-Allow-Origin": "http://localhost:3000",
         "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
       },
       statusCode: 200
@@ -38,7 +38,7 @@ def handler(event:, context:)
     { 
       headers: {
         "Access-Control-Allow-Headers": "*, Authorization",
-        "Access-Control-Allow-Origin": "https://localhost:3000",
+        "Access-Control-Allow-Origin": "http://localhost:3000",
         "Access-Control-Allow-Methods": "OPTIONS,GET,POST"
       },
       statusCode: 200, 
