@@ -8,13 +8,6 @@ class Db:
   def __init__(self):
     self.init_pool()
 
-  def init_pool(self):
-    connection_url = os.getenv("CONNECTION_URL")
-
-    if not connection_url:
-      raise ValueError("CONNECTION_URL environment variable not set")
-    self.pool = ConnectionPool(connection_url)
-
   def template(self,*args):
     pathing = list((app.root_path,'db','sql',) + args)
     pathing[-1] = pathing[-1] + ".sql"
@@ -30,6 +23,11 @@ class Db:
       template_content = f.read()
     return template_content
 
+  def init_pool(self):
+    connection_url = os.getenv("CONNECTION_URL")
+    if not connection_url:
+      raise ValueError("CONNECTION_URL environment variable not set")
+    self.pool = ConnectionPool(connection_url)
   
   # we want to commit data such as an insert
   # be sure to check for RETURNING in all uppercases

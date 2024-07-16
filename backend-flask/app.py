@@ -128,16 +128,15 @@ def health_check():
   return {'success': True, 'ver': 1}, 200
 
 # Rollbar -------------
-@app.route('/rollbar/test')
-def rollbar_test():
-    rollbar.report_message('Hello World!', 'warning')
-    return "Hello World!"
+# @app.route('/rollbar/test')
+# def rollbar_test():
+#     rollbar.report_message('Hello World!', 'warning')
+#     return "Hello World!"
 
 
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
   access_token = extract_access_token(request.headers)
-  
   try:
     claims = cognito_jwt_token.verify(access_token)
     # authenticated request
@@ -175,29 +174,7 @@ def data_messages(message_group_uuid):
     # unauthenticated request
     app.logger.debug(e)
     return {}, 401
-  
-@app.route("/api/profile/update", methods=['POST','OPTIONS'])
-@cross_origin()
-def data_update_profile():
-  bio          = request.json.get('bio',None)
-  display_name = request.json.get('display_name',None)
-  access_token = extract_access_token(request.headers)
-  try:
-    claims = cognito_jwt_token.verify(access_token)
-    cognito_user_id = claims['sub']
-    model = UpdateProfile.run(
-      cognito_user_id=cognito_user_id,
-      bio=bio,
-      display_name=display_name
-    )
-    if model['errors'] is not None:
-      return model['errors'], 422
-    else:
-      return model['data'], 200
-  except TokenVerifyError as e:
-    # unauthenicatied request
-    app.logger.debug(e)
-    return {}, 401
+
 
 @app.route("/api/messages", methods=['POST','OPTIONS'])
 @cross_origin()
@@ -259,29 +236,18 @@ def data_notifications():
   data = NotificationsActivities.run()
   return data, 200
 
-@app.route("/api/activities/@<string:handle>/short", methods=['GET'])
+@app.route("/api/users/@<string:handle>/short", methods=['GET'])
 def data_users_short(handle):
   data = UsersShort.run(handle)
   return data, 200
 
-# @app.route("/api/activities/@<string:handle>", methods=['GET'])
-# def data_handle(handle):
-#   model = UserActivities.run(handle)
-#   if model['errors'] is not None:
-#     return model['errors'], 422
-#   else:
-#     return model['data'], 200
-  
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
 def data_handle(handle):
-    app.logger.debug("Fetching activities for handle: %s", handle)
-    model = UserActivities.run(handle)
-    app.logger.debug("Model returned: %s", model)
-    if model['errors'] is not None:
-        app.logger.error("Errors occurred: %s", model['errors'])
-        return model['errors'], 422
-    else:
-        return model['data'], 200
+  model = UserActivities.run(handle)
+  if model['errors'] is not None:
+    return model['errors'], 422
+  else:
+    return model['data'], 200
 
 
 @app.route("/api/activities/search", methods=['GET'])
@@ -323,6 +289,29 @@ def data_activities_reply(activity_uuid):
   else:
     return model['data'], 200
   return
+
+@app.route("/api/profile/update", methods=['POST','OPTIONS'])
+@cross_origin()
+def data_update_profile():
+  bio          = request.json.get('bio',None)
+  display_name = request.json.get('display_name',None)
+  access_token = extract_access_token(request.headers)
+  try:
+    claims = cognito_jwt_token.verify(access_token)
+    cognito_user_id = claims['sub']
+    model = UpdateProfile.run(
+      cognito_user_id=cognito_user_id,
+      bio=bio,
+      display_name=display_name
+    )
+    if model['errors'] is not None:
+      return model['errors'], 422
+    else:
+      return model['data'], 200
+  except TokenVerifyError as e:
+    # unauthenicatied request
+    app.logger.debug(e)
+    return {}, 401
 
 if __name__ == "__main__":
   app.run(debug=True)

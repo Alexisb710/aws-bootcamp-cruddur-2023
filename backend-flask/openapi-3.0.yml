@@ -191,10 +191,10 @@ components:
           example: 103
         created_at:
           type: string
-          example: "2023-02-06T18:11:03+00:00"
+          example: "2024-02-06T18:11:03+00:00"
         expires_at:
           type: string
-          example: "2023-02-06T18:11:03+00:00"
+          example: "2024-02-06T18:11:03+00:00"
     Reply:
       type: object
       properties:
@@ -221,7 +221,7 @@ components:
           example: 103
         created_at:
           type: string
-          example: "2023-02-06T18:11:03+00:00"
+          example: "2024-02-06T18:11:03+00:00"
 
     Message:
       type: object
@@ -231,16 +231,16 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "Andrew Brown"
+          example: "Alexis Bustos"
         handle:
           type: string
-          example: "andrewbrown"
+          example: "alexisbustos"
         message:
           type: string
           example: "Who likes pineapple on their pizza?"
         created_at:
           type: string
-          example: "2023-02-06T18:11:03+00:00"
+          example: "2024-02-06T18:11:03+00:00"
     MessageGroup:
       type: object
       properties:

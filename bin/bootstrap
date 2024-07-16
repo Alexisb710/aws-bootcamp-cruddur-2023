@@ -1,5 +1,4 @@
 #! /usr/bin/env bash
-
 set -e # stop if it fails at any point
 
 GREEN='\033[1;32m'
