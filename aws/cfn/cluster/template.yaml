@@ -117,9 +117,9 @@ Resources:
         - Key: access_logs.s3.enabled
           Value: false
         # In-case we want to turn on logs
-        # - Name: access_logs.s3.bucket
+        # - Key: access_logs.s3.bucket
         #   Value: bucket-name
-        # - Name: access_logs.s3.prefix
+        # - Key: access_logs.s3.prefix
         #   Value: ""
   HTTPSListener:
     # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-elasticloadbalancingv2-listener.html
