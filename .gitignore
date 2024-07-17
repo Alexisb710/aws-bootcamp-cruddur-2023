@@ -21,3 +21,6 @@ package.json
 # parameters for cloud formation
 aws/cfn/cluster/config.toml
 aws/cfn/networking/config.toml
+
+aws/cfn/service/config.toml
+aws/cfn/service/template.yaml
