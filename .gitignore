@@ -17,3 +17,7 @@ package-lock.json
 package.json
 
 .DS_Store
+
+# parameters for cloud formation
+AWS-Bootcamp/aws-bootcamp-cruddur-2023/aws/cfn/cluster/config.toml
+AWS-Bootcamp/aws-bootcamp-cruddur-2023/aws/cfn/networking/config.toml
