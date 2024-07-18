@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 set -e # stop the execution of the script if it fails
 
-FUNC_DIR="/Users/alexisbusmat/Desktop/AWS-Bootcamp/aws-bootcamp-cruddur-2023/ddb/cruddur-messaging-stream/"
+FUNC_DIR="/Users/alexisbusmat/Desktop/AWS-Bootcamp/aws-bootcamp-cruddur-2023/ddb/function"
 TEMPLATE_PATH="/Users/alexisbusmat/Desktop/AWS-Bootcamp/aws-bootcamp-cruddur-2023/ddb/template.yaml"
 CONFIG_PATH="/Users/alexisbusmat/Desktop/AWS-Bootcamp/aws-bootcamp-cruddur-2023/ddb/config.toml"
 
