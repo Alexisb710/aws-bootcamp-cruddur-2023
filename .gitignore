@@ -27,3 +27,8 @@ aws/cfn/service/template.yaml
 
 aws/cfn/db/config.toml
 aws/cfn/db/template.yaml
+
+.aws-sam
+build.toml
+samconfig.toml
+*.toml
