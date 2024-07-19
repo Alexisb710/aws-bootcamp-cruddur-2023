@@ -36,3 +36,4 @@ build.toml
 samconfig.toml
 *.toml
 tmp/*
+.DS_Store
