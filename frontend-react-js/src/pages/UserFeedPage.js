@@ -23,11 +23,7 @@ export default function UserFeedPage() {
 
   const loadData = async () => {
     try {
-      console.log("start [error]::");
-      console.log("this is the params.handle value: ", params.handle);
-      console.log("end [error]::");
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/@${params.handle}`;
-      console.log("this is the backend_url value: ", backend_url);
       await getAccessToken();
       const access_token = localStorage.getItem("access_token");
       const res = await fetch(backend_url, {
