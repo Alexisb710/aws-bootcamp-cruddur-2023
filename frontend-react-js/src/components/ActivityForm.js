@@ -25,7 +25,6 @@ export default function ActivityForm(props) {
       const res = await fetch(backend_url, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${access_token}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
