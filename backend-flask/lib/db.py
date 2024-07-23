@@ -114,7 +114,6 @@ class Db:
     {template}
     ) array_row);
     """
-    print(f"Wrapped SQL: {sql}")
     return sql
   def print_sql_err(self,err):
     # get details about the exception

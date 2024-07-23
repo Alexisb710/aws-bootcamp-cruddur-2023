@@ -11,6 +11,7 @@ import MessageGroupsPage from "./pages/MessageGroupsPage";
 import MessageGroupPage from "./pages/MessageGroupPage";
 import MessageGroupNewPage from "./pages/MessageGroupNewPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
+import NotFound from "./pages/NotFound"; // Ensure this component exists
 import React from "react";
 
 // AWS Cognito
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot",
     element: <RecoverPage />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
