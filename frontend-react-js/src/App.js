@@ -1,6 +1,6 @@
 import "./App.css";
 import "./components/Popup.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import HomeFeedPage from "./pages/HomeFeedPage";
 import NotificationsFeedPage from "./pages/NotificationsFeedPage";
 import UserFeedPage from "./pages/UserFeedPage";
@@ -11,9 +11,11 @@ import MessageGroupsPage from "./pages/MessageGroupsPage";
 import MessageGroupPage from "./pages/MessageGroupPage";
 import MessageGroupNewPage from "./pages/MessageGroupNewPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
+import ActivityShowPage from "./pages/ActivityShowPage";
+import NotFound from "pages/NotFound";
 import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// AWS Cognito
 import { Amplify } from "aws-amplify";
 
 Amplify.configure({
@@ -45,6 +47,10 @@ const router = createBrowserRouter([
     element: <UserFeedPage />,
   },
   {
+    path: "/@:handle/status/:activity_uuid",
+    element: <ActivityShowPage />,
+  },
+  {
     path: "/messages",
     element: <MessageGroupsPage />,
   },
@@ -71,6 +77,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot",
     element: <RecoverPage />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
