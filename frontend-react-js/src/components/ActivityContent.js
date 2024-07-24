@@ -19,13 +19,19 @@ export default function ActivityContent(props) {
 
   return (
     <div className="activity_content_wrap">
-      <div className="activity_avatar"></div>
+      <Link
+        className="activity_avatar"
+        to={`/@` + props.activity.handle}></Link>
       <div className="activity_content">
         <div className="activity_meta">
-          <Link className="activity_identity" to={`/@` + props.activity.handle}>
-            <div className="display_name">{props.activity.display_name}</div>
-            <div className="handle">@{props.activity.handle}</div>
-          </Link>
+          <div className="activity_identity">
+            <Link className="display_name" to={`/@` + props.activity.handle}>
+              {props.activity.display_name}
+            </Link>
+            <Link className="handle" to={`/@` + props.activity.handle}>
+              @{props.activity.handle}
+            </Link>
+          </div>
           {/* activity_identity */}
           <div className="activity_times">
             <div

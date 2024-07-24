@@ -1,5 +1,10 @@
 import { getAccessToken } from "lib/CheckAuth";
 
+function isJsonResponse(response) {
+  const contentType = response.headers.get("content-type");
+  return contentType && contentType.indexOf("application/json") !== -1;
+}
+
 async function request(method, url, payload_data, options) {
   if (options.hasOwnProperty("setErrors")) {
     options.setErrors("");
@@ -24,25 +29,34 @@ async function request(method, url, payload_data, options) {
     }
 
     res = await fetch(url, attrs);
-    let data = await res.json();
-    if (res.status === 200) {
-      options.success(data);
-    } else {
-      if (options.setErrors !== null) {
-        options.setErrors(data);
+
+    if (isJsonResponse(res)) {
+      let data = await res.json();
+      if (res.status === 200) {
+        options.success(data);
+      } else {
+        if (options.setErrors !== null) {
+          options.setErrors(data);
+        }
+        console.log(res, data);
       }
-      console.log(res, data);
+    } else {
+      const text = await res.text();
+      console.error("HTML response received instead of JSON:", text);
+      if (options.hasOwnProperty("setErrors")) {
+        options.setErrors(["generic_500", text]);
+      }
     }
   } catch (err) {
     console.log("request catch", err);
     if (err instanceof Response) {
-      console.log("HTTP error detected:", err.status); // Here you can see the status.
+      console.log("HTTP error detected:", err.status);
       if (options.hasOwnProperty("setErrors")) {
-        options.setErrors([`generic_${err.status}`]); // Just an example. Adjust it to your needs.
+        options.setErrors([`generic_${err.status}`]);
       }
     } else {
       if (options.hasOwnProperty("setErrors")) {
-        options.setErrors([`generic_500`]); // For network errors or any other errors
+        options.setErrors([`generic_500`]);
       }
     }
   }
